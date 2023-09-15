@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Cart from '../cart/Cart';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Home = () => {
@@ -13,13 +15,18 @@ const Home = () => {
             .then((data) => setAllCourses(data))
     }, [])
 
-    const handleSelectCourse = (course) => {
-        setSelectedCourse([...selectedCourse, course])
-    }
     
 
 
-
+    const handleSelectCourse = (course) => {
+        if (selectedCourse.includes(course)) {
+            toast.warning("You have already selected this course.", {
+                position: toast.POSITION.TOP_CENTER,
+            });
+        } else {
+            setSelectedCourse([...selectedCourse, course]);
+        }
+    }
 
 
 
@@ -60,6 +67,7 @@ const Home = () => {
                 {/* cart section  */}
                 <Cart selectedCourse={selectedCourse}></Cart>
             </div>
+            <ToastContainer />
         </div>
     );
 };

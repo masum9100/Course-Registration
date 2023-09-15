@@ -4,17 +4,18 @@ import React, { useEffect, useState } from 'react';
 const Home = () => {
 
     const [allCourses, setAllCourses] = useState([])
+    const [selectedCourse, setSelectedCourse] = useState([])
 
     useEffect(() => {
         fetch("./data.json")
             .then((res) => res.json())
             .then((data) => setAllCourses(data))
     }, [])
-    console.log(allCourses)
 
-
-
-
+    const handleSelectCourse = (course) => {
+        setSelectedCourse([...selectedCourse, course])
+    }
+    console.log(selectedCourse)
 
 
 
@@ -38,7 +39,7 @@ const Home = () => {
                                     <p className='font-normal text-base text-[#777676]'>$ Price: {course.price}</p>
                                     <p className='font-normal text-base text-[#777676]'># Credit: {course.credit} hrs</p>
                                 </div>
-                                <button className='mt-3 text-lg font-semibold bg-[#2F80ED] rounded-md text-white w-full'>Select</button>
+                                <button onClick={()=>handleSelectCourse(course)} className='mt-3 text-lg font-semibold bg-[#2F80ED] rounded-md text-white w-full'>Select</button>
                             </div>
                         ))
                     }
